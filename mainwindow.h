@@ -8,6 +8,7 @@
 #include <inventory.h>
 #include <enemigo.h>
 #include <objeto.h>
+#include <jugador.h>
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QLabel>
