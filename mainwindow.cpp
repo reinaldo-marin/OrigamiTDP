@@ -69,48 +69,43 @@ void MainWindow::on_bntIniSesi_clicked()
     string usu,contra;
     usu=ui->le_usu->text().toStdString();
     contra=ui->le_contra->text().toStdString();
-    ifstream archivo("usuarioycontra.txt");
-    string linea;
-    archivo.open("usuarioycontra.txt",ios::app);
-    int repe = 0;
-    enemigo = new Enemigo(0,0,2000);
-    Scene->addItem(enemigo);
-    while(archivo.good())
+    ifstream admin("usuarioycontra.txt");
+    string lineas;
+    int c = 0;
+
+    for(c ;getline(admin, lineas);c++)
     {
-       getline(archivo,linea);
-       int posInit=0;
-       int posFound=0;
-       string substr;
-       vector<string>campos;
-       vector<string> s;
 
-       while(posFound>=0)
-       {
-           posFound=linea.find(';',posInit);
-           substr=linea.substr(posInit,posFound-posInit);
-           posInit=posFound+1;
-           campos.push_back(substr);
-       }
-       if (campos[0] == usu)
-       {
-          labeludo->setText("Bienvenido");
-          repe = 1;
-
-       }
-       else
-       {
-         labeludo->setText("Error");
-       }
+        if (lineas == usu)
+         {
+           break;
+         }
+        else
+        {
+            labeludo->setText("Usuario o clave incorrecta");
+            break;
+        }
 
     }
-    archivo.close();
-    if (repe == 1)
+    ifstream f("usuarioycontra.txt");
+    string lineaus;
+    for(int z = 0;getline(f, lineaus);z++)
     {
-        entra = 1;
-        ofstream filep;
-        ifstream in_file;
-        filep.open("entra.txt",ios::app);
-        filep<<"1"<<endl;
+        if (z == c+1)
+         {
+           if (lineaus == contra )
+           {
+               entra = 1;
+               labeludo->setText("Bienvenido");
+               break;
+           }
+           else
+           {
+               labeludo->setText("Usuario o clave incorrecta");
+               break;
+           }
+         }
+
     }
 
 
@@ -164,23 +159,13 @@ void MainWindow::on_btnRegis_clicked()
     while(archivo.good())
     {
        getline(archivo,linea);
-       int posInit=0;
-       int posFound=0;
        string substr;
        vector<string>campos;
        vector<string> s;
-       while(posFound>=0)
-       {
-           posFound=linea.find(';',posInit);
-           substr=linea.substr(posInit,posFound-posInit);
-           posInit=posFound+1;
-           campos.push_back(substr);
-       }
-       if (campos[0] == usu)
+       if (linea == usu)
        {
            repitis = 1;
        }
-
     }
     archivo.close();
     if (repitis == 1)
@@ -192,7 +177,9 @@ void MainWindow::on_btnRegis_clicked()
         ofstream filep;
         ifstream in_file;
         filep.open("usuarioycontra.txt",ios::app);
-        filep<<usu<<";"<<contra<<";"<<"1"<<endl;
+        filep<<usu<<endl;
+        filep<<contra<<endl;
+        filep<<"1"<<endl;
     }
 
 
