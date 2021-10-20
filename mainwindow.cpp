@@ -47,11 +47,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     timer=  new QTimer;
+    timer2=  new QTimer;
     Scene = new QGraphicsScene;
     Scene2 = new QGraphicsScene;
     ui->graphicsView->setScene(Scene);
     Scene->setSceneRect(-400,-450,800,810);
     connect(timer,SIGNAL(timeout()),this,SLOT(Mover()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(Control_Enemigos1()));
     labeludo = new QLabel(stringo,this);
     labeludo->setGeometry(20,900,900,70);
     labeludo->setFont(QFont("Comic Sans MS", 20));
@@ -112,39 +114,33 @@ void MainWindow::on_bntIniSesi_clicked()
 }
 
 
+void MainWindow::Control_Enemigos1()
+{
+    int tot = miInventario.ContarCuerpos();
+    int xr = rand()%(800-30);
+    int xy = rand()%(600-30);
+    enemigo = new Enemigo(xr,xy,50);
+    movimiento= new Movimiento(xr,xy,50);
+    if(miInventario.AgregarCuerpo(movimiento))
+    {
+
+    }
+    if(miInventory.AgregarEnemigo(enemigo))
+    {
+
+    }
+    Scene2->addItem(enemigo);
+    for (int s = 0; s<tot; s++)
+    {
+        miInventory.getEnemigos()[s]->Mover(miInventario.getCuerpos()[s]->getPosx()+100,miInventario.getCuerpos()[s]->getPosy()+100);
+    }
+
+}
 
 
 void MainWindow::Mover()
 {
-    int tot = miInventario.ContarCuerpos();
-    for (int p = 0; p<tot;p++)
-      {
-          int acex = 0;
-          int acey = 0;
-          for (int k = 0; k<tot;k++)
-          {
-            if (p == k)
-            {
 
-            }
-            else
-            {
-               int xr = acelerax(miInventario.getCuerpos()[k]->getMasa(),miInventario.getCuerpos()[p]->getPosx(),miInventario.getCuerpos()[k]->getPosx(),miInventario.getCuerpos()[p]->getPosy(),miInventario.getCuerpos()[k]->getPosy());
-               int xy = aceleray(miInventario.getCuerpos()[k]->getMasa(),miInventario.getCuerpos()[p]->getPosx(),miInventario.getCuerpos()[k]->getPosx(),miInventario.getCuerpos()[p]->getPosy(),miInventario.getCuerpos()[k]->getPosy());
-               acex += xr;
-               acey += xy;
-            }
-          }
-          miInventario.getCuerpos()[p]->SetAceleracionx(acex);
-          miInventario.getCuerpos()[p]->SetAceleraciony(acey);
-      }
-    for(int plopi = 0;plopi<tot;plopi++)
-    {
-        miInventario.getCuerpos()[plopi]->CalcularVelocidad();
-        miInventario.getCuerpos()[plopi]->CalcularPosicion();
-        miInventory.getCorpus()[plopi]->Mover(miInventario.getCuerpos()[plopi]->getPosx(),miInventario.getCuerpos()[plopi]->getPosy());
-
-    }
 }
 
 void MainWindow::on_btnRegis_clicked()
@@ -218,70 +214,12 @@ void MainWindow::on_bntnvl1_clicked()
     archivo.close();
     if(entra == 1)
     {
+        timer2->start(50);
         ui->graphicsView->setScene(Scene2);
-        Scene2->setSceneRect(-400,-450,800,810);
-        enemigo = new Enemigo(0,0,20);
-        Scene2->addItem(enemigo);
+        Scene2->setSceneRect(0,0,800,810);
         paredes.push_back(new pared(0,0,600,10));
         Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(0,200,600,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(0,0,10,150));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(0,130,10,150));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(300,0,10,150));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(300,130,10,150));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(0,70,130,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(0,130,130,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(240,130,130,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(240,70,130,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(150,0,10,90));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(30,25,60,40));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(90,25,60,40));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(190,25,60,40));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(245,25,60,40));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(125,120,110,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(122,100,10,50));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(179,100,10,50));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(125,155,100,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(150,155,10,50));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(200,175,100,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(200,155,10,50));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(47,175,100,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(97,155,10,50));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(125,70,120,10));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(151,70,10,50));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(90,90,10,55));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(210,90,10,55));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(60,70,10,120));
-        Scene2->addItem(paredes.back());
-        paredes.push_back(new pared(240,70,10,120));
-        Scene2->addItem(paredes.back());
+
     }
     else
     {

@@ -12,21 +12,21 @@ Inventory::Inventory()
 
 }
 
-bool Inventory::AgregarCorpu(Cuerpo *Corpu)
+bool Inventory::AgregarEnemigo(Enemigo *Enemigo)
 {
-        Corpus.push_back(Corpu);
+        Tumulto.push_back(Enemigo);
         return true;
 }
 
 
-std::vector<Cuerpo *> Inventory::getCorpus()
+std::vector<Enemigo *> Inventory::getEnemigos()
 {
-    return Corpus;
+    return Tumulto;
 }
-int Inventory::ContarCorpus()
+int Inventory::ContarEnemigos()
 {
     unsigned i = 0;
-    for(i=0; i<Corpus.size(); i++)
+    for(i=0; i<Tumulto.size(); i++)
    {
 
    }
