@@ -1,19 +1,19 @@
 #ifndef Inventory_H
 #define Inventory_H
-#include <cuerpo.h>
+#include <enemigo.h>
 #include <vector>
 #include <fstream>
 
 class Inventory
 {
-    std::vector<Cuerpo*>Corpus;
+    std::vector<Enemigo*>Tumulto;
 
 public:
     Inventory();
-    bool AgregarCorpu(Cuerpo *Corpu);
+    bool AgregarEnemigo(Enemigo *Enemigo);
     int CargarInventory();
-    int ContarCorpus();
-    std::vector<Cuerpo*>getCorpus();
+    int ContarEnemigos();
+    std::vector<Enemigo*>getEnemigos();
 
 };
 

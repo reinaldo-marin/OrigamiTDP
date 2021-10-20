@@ -28,7 +28,7 @@ void Enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
 }
 
-void Enemigo::Mover()
+void Enemigo::Mover(int posx, int posy)
 {
    setPos(posx,-posy);
 }

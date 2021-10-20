@@ -20,7 +20,7 @@ public:
     QRectF boundingRect() const ;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr);
-    void Mover();
+    void Mover(int posx, int posy);
 
 
 };

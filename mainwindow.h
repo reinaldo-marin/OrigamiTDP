@@ -50,6 +50,7 @@ public:
 private slots:
     void on_bntIniSesi_clicked();
     void Mover();
+    void Control_Enemigos1();
     void on_btnRegis_clicked();
 
     void on_bntnvl1_clicked();
@@ -60,6 +61,7 @@ private:
     QGraphicsScene *Scene;
     QGraphicsScene *Scene2;
     QTimer *timer;
+    QTimer *timer2;
     Cuerpo *cuerpo;
     Movimiento *movimiento;
     Inventario miInventario;

@@ -7,11 +7,11 @@
 class Movimiento
 {
 
-    double posx,posy,masa,radio,vx,vy,ang,ax,ay;
+    double posx,posy,radio;
 
 public:
     Movimiento();
-    Movimiento(double x,double y, double masa, double radio, double vx, double vy);
+    Movimiento(double x,double y, double radio);
     void CalcularVelocidad();
     void CalcularPosicion();
     double getPosx() const;
