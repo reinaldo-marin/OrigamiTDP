@@ -53,11 +53,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(Scene);
     Scene->setSceneRect(-400,-450,800,810);
     connect(timer,SIGNAL(timeout()),this,SLOT(Mover()));
-    connect(timer,SIGNAL(timeout()),this,SLOT(Control_Enemigos1()));
+    connect(timer2,SIGNAL(timeout()),this,SLOT(Control_Enemigos1()));
     labeludo = new QLabel(stringo,this);
     labeludo->setGeometry(20,900,900,70);
     labeludo->setFont(QFont("Comic Sans MS", 20));
     entra = 0;
+    ball = new Jugador(400,600,30);
 }
 
 MainWindow::~MainWindow()
@@ -116,11 +117,18 @@ void MainWindow::on_bntIniSesi_clicked()
 
 void MainWindow::Control_Enemigos1()
 {
-    int tot = miInventario.ContarCuerpos();
-    int xr = rand()%(800-30);
-    int xy = rand()%(600-30);
-    enemigo = new Enemigo(xr,xy,50);
-    movimiento= new Movimiento(xr,xy,50);
+    int xr = rand()%(800-50);
+    int xy = rand()%(600-200);
+    if (conta%2==0)
+    {
+
+    }
+    else
+    {
+        enemigo = new Enemigo(xr,xy,50);
+        movimiento= new Movimiento(xr,xy,50);
+    }
+
     if(miInventario.AgregarCuerpo(movimiento))
     {
 
@@ -129,11 +137,14 @@ void MainWindow::Control_Enemigos1()
     {
 
     }
+    int tot = miInventory.ContarEnemigos();
     Scene2->addItem(enemigo);
     for (int s = 0; s<tot; s++)
     {
-        miInventory.getEnemigos()[s]->Mover(miInventario.getCuerpos()[s]->getPosx()+100,miInventario.getCuerpos()[s]->getPosy()+100);
+        miInventario.getCuerpos()[s]->SetPosi(miInventario.getCuerpos()[s]->getPosx(),miInventario.getCuerpos()[s]->getPosy()-20);
+        miInventory.getEnemigos()[s]->Mover(miInventario.getCuerpos()[s]->getPosx(),miInventario.getCuerpos()[s]->getPosy());
     }
+    conta++;
 
 }
 
@@ -214,16 +225,85 @@ void MainWindow::on_bntnvl1_clicked()
     archivo.close();
     if(entra == 1)
     {
-        timer2->start(50);
+        timer2->start(1000);
         ui->graphicsView->setScene(Scene2);
         Scene2->setSceneRect(0,0,800,810);
-        paredes.push_back(new pared(0,0,600,10));
-        Scene2->addItem(paredes.back());
+        Scene2->addItem(ball);
 
     }
     else
     {
         labeludo->setText("Debes iniciar sesión primero");
+    }
+
+}
+bool MainWindow::EvaluarColision()
+{
+    int tot = miInventory.ContarEnemigos();
+    for(int it=0;it<tot;it++)
+    {
+        if((miInventory.getEnemigos()[it])->collidesWithItem(ball))
+            return true;
+    }
+    return false;
+}
+int MainWindow::PosColi()
+{
+    int tot = miInventory.ContarEnemigos();
+    int pos;
+    for(int it=0;it<tot;it++)
+    {
+        if((miInventory.getEnemigos()[it])->collidesWithItem(ball))
+        {
+            pos = it-tot;
+            return pos;
+        }
+    }
+    return false;
+}
+void MainWindow::keyPressEvent(QKeyEvent *evento)
+{
+    if(evento->key()==Qt::Key_D)
+    {
+        if(EvaluarColision())
+        {
+           ball->MoveLeft();
+           Scene2->removeItem(miInventory.getEnemigos()[PosColi()]);
+        }
+        else
+           ball->MoveRight();
+
+    }
+    else if(evento->key()==Qt::Key_A)
+     {
+        if(EvaluarColision())
+        {
+            ball->MoveRight();
+            Scene2->removeItem(miInventory.getEnemigos()[PosColi()]);
+        }
+        else
+            ball->MoveLeft();
+     }
+    else if(evento->key()==Qt::Key_W)
+    {
+      if(EvaluarColision())
+      {
+            ball->MoveDown();
+            Scene2->removeItem(miInventory.getEnemigos()[PosColi()]);
+      }
+        else
+            ball->MoveUp();
+    }
+    else if(evento->key()==Qt::Key_S)
+    {
+        if(EvaluarColision())
+        {
+            ball->MoveUp();
+            Scene2->removeItem(miInventory.getEnemigos()[PosColi()]);
+        }
+        else
+           ball->MoveDown();
+
     }
 
 }

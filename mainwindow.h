@@ -13,6 +13,7 @@
 #include <QGraphicsScene>
 #include <QLabel>
 #include <QWidget>
+#include <QKeyEvent>
 #include <QString>
 #include <QCoreApplication>
 #include <iostream>
@@ -46,6 +47,9 @@ public:
     QString stringo;
     int contador;
     int entra;
+    int conta = 1;
+    bool EvaluarColision();
+    int PosColi();
 
 private slots:
     void on_bntIniSesi_clicked();
@@ -68,6 +72,8 @@ private:
     QList<pared*>paredes;
     Inventory miInventory;
     Enemigo *enemigo;
+    void keyPressEvent(QKeyEvent *evento);
+    Jugador *ball;
 
 };
 #endif // MAINWINDOW_H
