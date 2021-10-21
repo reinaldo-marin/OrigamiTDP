@@ -2,7 +2,7 @@
 #define MOVIMIENTO_H
 #include <math.h>
 #include <vector>
-#define DT 0.05
+#define DT 1
 
 class Movimiento
 {
@@ -20,6 +20,7 @@ public:
     void SetAngulo(int value);
     void SetAceleracionx(int value);
     void SetAceleraciony(int value);
+    void SetPosi(int value, int value2);
 };
 
 #endif // MOVIMIENTO_H

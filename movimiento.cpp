@@ -10,6 +10,12 @@ double Movimiento::getPosy() const
     return posy;
 }
 
+void Movimiento::SetPosi(int value, int value2)
+{
+    posx = value;
+    posy = value2;
+}
+
 Movimiento::Movimiento()
 {
 

@@ -1,5 +1,4 @@
 #include "jugador.h"
-#include <string>
 string Jugador::getUsu() const
 {
     return usu;
@@ -38,4 +37,58 @@ Jugador::Jugador(string usu, string contra, string nivel)
     this->usu=usu;
     this->contra=contra;
     this->nivel=nivel;
+
+}
+Jugador::Jugador(int x, int y, int r)
+{
+
+    this->posx=x;
+    this->posy=y;
+    this->radio=r;
+    this->velocidad=10;
+    setPos(posx,posy);
+}
+
+QRectF Jugador::boundingRect() const
+{
+    return QRectF(-radio,-radio,radio*2,radio*2);
+}
+
+void Jugador::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    //painter->setBrush(Qt::red);
+    //painter->drawEllipse(boundingRect());
+    QPixmap pxMap("bird.png");
+    painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
+}
+
+void Jugador::MoveRight()
+{
+    this->posx+=velocidad;
+    setPos(posx,posy);
+}
+
+void Jugador::MoveLeft()
+{
+    this->posx-=velocidad;
+    setPos(posx,posy);
+}
+
+void Jugador::MoveUp()
+{
+    this->posy-=velocidad;
+    setPos(posx,posy);
+
+}
+
+void Jugador::MoveDown()
+{
+    this->posy+=velocidad;
+    setPos(posx,posy);
+
+}
+
+void Jugador::Disparar()
+{
+
 }
