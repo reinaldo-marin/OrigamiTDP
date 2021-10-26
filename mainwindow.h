@@ -51,9 +51,10 @@ public:
     int contador = 0;
     int entra;
     int conta = 1;
-    bool EvaluarColision();
+    int njugadores = 1;
+    bool EvaluarColision(Jugador *Jugador);
     bool EvaluarBala();
-    int PosColi();
+    int PosColi(Jugador *bola);
     int PosBala();
     int PosBalin();
 
@@ -65,6 +66,8 @@ private slots:
     void on_btnRegis_clicked();
 
     void on_bntnvl1_clicked();
+
+    void on_radioButton_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -85,6 +88,7 @@ private:
     Enemigo *enemigo;
     void keyPressEvent(QKeyEvent *evento);
     Jugador *ball;
+    Jugador *ball2;
 
 };
 #endif // MAINWINDOW_H

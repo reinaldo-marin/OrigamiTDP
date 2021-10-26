@@ -65,7 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
     puntaje->setGeometry(1020,800,900,70);
     puntaje->setFont(QFont("Comic Sans MS", 20));
     entra = 0;
-    ball = new Jugador(400,600,60);
+    ball = new Jugador(300,700,60);
+    ball2 = new Jugador(500,700,61);
 }
 
 MainWindow::~MainWindow()
@@ -124,8 +125,8 @@ void MainWindow::on_bntIniSesi_clicked()
 
 void MainWindow::Control_Enemigos1()
 {
-    int xr = rand()%(800-90);
-    int xy = rand()%(600-200);
+    int xr = rand()%(800-160);
+    int xy = rand()%(600-100);
     enemigous.push_back(new Enemigo(xr,xy,100));
     Scene2->addItem(enemigous.back());
     movimiento= new Movimiento(xr,xy,50);
@@ -247,6 +248,10 @@ void MainWindow::on_bntnvl1_clicked()
         ui->graphicsView->setScene(Scene2);
         Scene2->setSceneRect(0,0,800,810);
         Scene2->addItem(ball);
+        if (njugadores==2)
+        {
+           Scene2->addItem(ball2);
+        }
 
     }
     else
@@ -255,12 +260,12 @@ void MainWindow::on_bntnvl1_clicked()
     }
 
 }
-bool MainWindow::EvaluarColision()
+bool MainWindow::EvaluarColision(Jugador *bola)
 {
     QList<Enemigo*>::Iterator it;
     for(it=enemigous.begin();it!=enemigous.end();it++)
     {
-        if((*it)->collidesWithItem(ball) or (ball)->collidesWithItem(*it))
+        if((*it)->collidesWithItem(bola) or (bola)->collidesWithItem(*it))
             return true;
     }
     return false;
@@ -320,13 +325,13 @@ int MainWindow::PosBalin()
     }
 
 }
-int MainWindow::PosColi()
+int MainWindow::PosColi(Jugador *bola)
 {
     QList<Enemigo*>::Iterator it;
     int pos;
     for(it=enemigous.begin();it!=enemigous.end();it++)
     {
-        if((*it)->collidesWithItem(ball) or (ball)->collidesWithItem(*it))
+        if((*it)->collidesWithItem(bola) or (bola)->collidesWithItem(*it))
         {
             pos = it-enemigous.begin();
             return pos;
@@ -342,10 +347,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
           ball->SetPos(ball->GetPosx()-20,ball->GetPosy());
         }
-        if(EvaluarColision() && enemigous.at(PosColi())->scene() != NULL)
+        if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
         {
            ball->SetPos(ball->GetPosx()-20,ball->GetPosy());
-           Scene2->removeItem(enemigous.at(PosColi()));
+           Scene2->removeItem(enemigous.at(PosColi(ball)));
            contador-=100;
            puntaje->setText(QString::number(contador));
         }
@@ -359,10 +364,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            ball->SetPos(ball->GetPosx()+20,ball->GetPosy());
         }
-        if(EvaluarColision() && enemigous.at(PosColi())->scene() != NULL)
+        if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
         {
             ball->SetPos(ball->GetPosx()+20,ball->GetPosy());
-            Scene2->removeItem(enemigous.at(PosColi()));
+            Scene2->removeItem(enemigous.at(PosColi(ball)));
             contador-=100;
             puntaje->setText(QString::number(contador));
         }
@@ -375,10 +380,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
       {
           ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
       }
-      if(EvaluarColision() && enemigous.at(PosColi())->scene() != NULL)
+      if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
       {
             ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
-            Scene2->removeItem(enemigous.at(PosColi()));
+            Scene2->removeItem(enemigous.at(PosColi(ball)));
             contador-=100;
             puntaje->setText(QString::number(contador));
       }
@@ -387,14 +392,14 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_S)
     {
-        if(ball->GetPosy()>600)
+        if(ball->GetPosy()>500)
         {
-            ball->SetPos(ball->GetPosx(),ball->GetPosy()+20);
+            ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
         }
-        if(EvaluarColision() && enemigous.at(PosColi())->scene() != NULL)
+        if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
         {
             ball->SetPos(ball->GetPosx(),ball->GetPosy()+20);
-            Scene2->removeItem(enemigous.at(PosColi()));
+            Scene2->removeItem(enemigous.at(PosColi(ball)));
             contador-=100;
             puntaje->setText(QString::number(contador));
         }
@@ -402,7 +407,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
            ball->MoveDown();
 
     }
-    else if(evento->key()==Qt::Key_G)
+    else if(evento->key()==Qt::Key_R)
      {
         balas.push_back(new Bala(ball->GetPosx(),ball->GetPosy()-100,25));
         Scene2->addItem(balas.back());
@@ -414,6 +419,91 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         timerbala->start(50);
 
      }
+    if(evento->key()==Qt::Key_L)
+    {
+        if(ball2->GetPosx()>800)
+        {
+          ball2->SetPos(ball2->GetPosx()-20,ball2->GetPosy());
+        }
+        if(EvaluarColision(ball2) && enemigous.at(PosColi(ball2))->scene() != NULL)
+        {
+           ball2->SetPos(ball2->GetPosx()-20,ball2->GetPosy());
+           Scene2->removeItem(enemigous.at(PosColi(ball2)));
+           contador-=100;
+           puntaje->setText(QString::number(contador));
+        }
+        else
+           ball2->MoveRight();
 
+    }
+    else if(evento->key()==Qt::Key_J)
+     {
+        if(ball2->GetPosx()<50)
+        {
+           ball2->SetPos(ball2->GetPosx()+20,ball2->GetPosy());
+        }
+        if(EvaluarColision(ball2) && enemigous.at(PosColi(ball2))->scene() != NULL)
+        {
+            ball2->SetPos(ball2->GetPosx()+20,ball2->GetPosy());
+            Scene2->removeItem(enemigous.at(PosColi(ball2)));
+            contador-=100;
+            puntaje->setText(QString::number(contador));
+        }
+        else
+            ball2->MoveLeft();
+     }
+    else if(evento->key()==Qt::Key_I)
+    {
+      if(ball2->GetPosy()<200)
+      {
+          ball2->SetPos(ball2->GetPosx(),ball2->GetPosy()-20);
+      }
+      if(EvaluarColision(ball2) && enemigous.at(PosColi(ball2))->scene() != NULL)
+      {
+            ball2->SetPos(ball2->GetPosx(),ball2->GetPosy()-20);
+            Scene2->removeItem(enemigous.at(PosColi(ball2)));
+            contador-=100;
+            puntaje->setText(QString::number(contador));
+      }
+        else
+            ball2->MoveUp();
+    }
+    else if(evento->key()==Qt::Key_K)
+    {
+        if(ball2->GetPosy()>600)
+        {
+            ball2->SetPos(ball2->GetPosx(),ball2->GetPosy()+20);
+        }
+        if(EvaluarColision(ball2) && enemigous.at(PosColi(ball2))->scene() != NULL)
+        {
+            ball2->SetPos(ball2->GetPosx(),ball2->GetPosy()+20);
+            Scene2->removeItem(enemigous.at(PosColi(ball)));
+            contador-=100;
+            puntaje->setText(QString::number(contador));
+        }
+        else
+           ball2->MoveDown();
+
+    }
+    else if(evento->key()==Qt::Key_P)
+     {
+        balas.push_back(new Bala(ball2->GetPosx(),ball2->GetPosy()-100,25));
+        Scene2->addItem(balas.back());
+        movimientob = new Movimiento(ball2->GetPosx(),ball2->GetPosy()-100,25);
+        if(miInventario.AgregarBalas(movimientob))
+        {
+
+        }
+        timerbala->start(50);
+
+     }
+
+}
+
+
+void MainWindow::on_radioButton_toggled(bool checked)
+{
+    labeludo->setText("Jugador 2 añadido");
+    njugadores=2;
 }
 
