@@ -8,6 +8,7 @@
 #include <inventory.h>
 #include <enemigo.h>
 #include <objeto.h>
+#include <fondo.h>
 #include <jugador.h>
 #include <bala.h>
 #include <QTimer>
@@ -62,6 +63,7 @@ private slots:
     void on_bntIniSesi_clicked();
     void Mover();
     void MoverBala();
+    void MoverFondo();
     void Control_Enemigos1();
     void on_btnRegis_clicked();
 
@@ -76,6 +78,7 @@ private:
     QGraphicsScene *Scene2;
     QTimer *timer;
     QTimer *timer2;
+    QTimer *timerfondo;
     QTimer *timerbala;
     Cuerpo *cuerpo;
     Movimiento *movimiento;
@@ -89,6 +92,7 @@ private:
     void keyPressEvent(QKeyEvent *evento);
     Jugador *ball;
     Jugador *ball2;
+    Fondo *fondo;
 
 };
 #endif // MAINWINDOW_H
