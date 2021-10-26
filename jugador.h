@@ -34,8 +34,11 @@ public:
     void MoveRight();
     void MoveLeft();
     void MoveUp();
+    int GetPosx();
+    int GetPosy();
     void MoveDown();
     void Disparar();
+    void SetPos(int xd, int yd);
 
 };
 #endif // JUGADOR_H

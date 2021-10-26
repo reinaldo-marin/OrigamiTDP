@@ -57,8 +57,8 @@ QRectF Jugador::boundingRect() const
 void Jugador::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     //painter->setBrush(Qt::red);
-    //painter->drawEllipse(boundingRect());
-    QPixmap pxMap("bird.png");
+    //painter->drawEllipse(boundinsgRect());
+    QPixmap pxMap("avion.png");
     painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
 }
 
@@ -81,6 +81,16 @@ void Jugador::MoveUp()
 
 }
 
+int Jugador::GetPosx()
+{
+    return posx;
+}
+
+int Jugador::GetPosy()
+{
+    return posy;
+}
+
 void Jugador::MoveDown()
 {
     this->posy+=velocidad;
@@ -91,4 +101,9 @@ void Jugador::MoveDown()
 void Jugador::Disparar()
 {
 
+}
+
+void Jugador::SetPos(int xd, int yd)
+{
+   setPos(xd,yd);
 }
