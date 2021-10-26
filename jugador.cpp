@@ -58,8 +58,17 @@ void Jugador::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
     //painter->setBrush(Qt::red);
     //painter->drawEllipse(boundinsgRect());
-    QPixmap pxMap("avion.png");
-    painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
+    if (radio == 60 )
+    {
+        QPixmap pxMap("avion.png");
+        painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
+    }
+    else
+    {
+        QPixmap pxMap("bat.png");
+        painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
+    }
+
 }
 
 void Jugador::MoveRight()
