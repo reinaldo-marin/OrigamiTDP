@@ -24,7 +24,7 @@ void Enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
     //painter->setBrush(Qt::red);
     //painter->drawEllipse(boundingRect());
-    QPixmap pxMap("bird.png");
+    QPixmap pxMap("borra.png");
     painter->drawPixmap(boundingRect(),pxMap,pxMap.rect());
 }
 

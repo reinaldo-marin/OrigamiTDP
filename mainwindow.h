@@ -9,6 +9,7 @@
 #include <enemigo.h>
 #include <objeto.h>
 #include <jugador.h>
+#include <bala.h>
 #include <QTimer>
 #include <QGraphicsScene>
 #include <QLabel>
@@ -44,16 +45,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
     QLabel *labeludo;
+    QLabel *puntaje;
     QString stringo;
-    int contador;
+    QString stringp;
+    int contador = 0;
     int entra;
     int conta = 1;
     bool EvaluarColision();
+    bool EvaluarBala();
     int PosColi();
+    int PosBala();
+    int PosBalin();
 
 private slots:
     void on_bntIniSesi_clicked();
     void Mover();
+    void MoverBala();
     void Control_Enemigos1();
     void on_btnRegis_clicked();
 
@@ -66,10 +73,14 @@ private:
     QGraphicsScene *Scene2;
     QTimer *timer;
     QTimer *timer2;
+    QTimer *timerbala;
     Cuerpo *cuerpo;
     Movimiento *movimiento;
+     Movimiento *movimientob;
     Inventario miInventario;
     QList<pared*>paredes;
+    QList<Enemigo*>enemigous;
+    QList<Bala*>balas;
     Inventory miInventory;
     Enemigo *enemigo;
     void keyPressEvent(QKeyEvent *evento);
