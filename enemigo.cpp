@@ -17,7 +17,7 @@ Enemigo::Enemigo(int x, int y, int r)
 
 QRectF Enemigo::boundingRect() const
 {
-    return QRectF(-radio,-radio,radio*2,radio*2);
+    return QRectF(-radio,-radio,radio+90,radio+90);
 }
 
 void Enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
