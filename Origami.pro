@@ -12,6 +12,7 @@ SOURCES += \
     bala.cpp \
     cuerpo.cpp \
     enemigo.cpp \
+    fondo.cpp \
     inventario.cpp \
     inventory.cpp \
     jugador.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     bala.h \
     cuerpo.h \
     enemigo.h \
+    fondo.h \
     inventario.h \
     inventory.h \
     jugador.h \

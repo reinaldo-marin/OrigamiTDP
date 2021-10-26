@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     timer=  new QTimer;
     timer2=  new QTimer;
+    timerfondo=  new QTimer;
     timerbala=  new QTimer;
     Scene = new QGraphicsScene;
     Scene2 = new QGraphicsScene;
@@ -56,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
     Scene->setSceneRect(-400,-450,800,810);
     connect(timer,SIGNAL(timeout()),this,SLOT(Mover()));
     connect(timer2,SIGNAL(timeout()),this,SLOT(Control_Enemigos1()));
+    connect(timerfondo,SIGNAL(timeout()),this,SLOT(MoverFondo()));
     connect(timerbala,SIGNAL(timeout()),this,SLOT(MoverBala()));
     labeludo = new QLabel(stringo,this);
     labeludo->setGeometry(20,900,900,70);
@@ -67,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
     entra = 0;
     ball = new Jugador(300,700,60);
     ball2 = new Jugador(500,700,61);
+    fondo = new Fondo(300,-900,300);
 }
 
 MainWindow::~MainWindow()
@@ -171,6 +174,12 @@ void MainWindow::MoverBala()
     }
 }
 
+void MainWindow::MoverFondo()
+{
+    fondo->Setxy(fondo->GetPosx(),fondo->GetPosy()+3);
+    fondo->Mover(fondo->GetPosx(),fondo->GetPosy());
+}
+
 void MainWindow::on_btnRegis_clicked()
 {
     string usu,contra;
@@ -242,7 +251,9 @@ void MainWindow::on_bntnvl1_clicked()
     archivo.close();
     if(entra == 1)
     {
+        Scene2->addItem(fondo);
         puntaje->setText(QString::number(contador));
+        timerfondo->start(100);
         timer2->start(3000);
         timer->start(1000);
         ui->graphicsView->setScene(Scene2);
