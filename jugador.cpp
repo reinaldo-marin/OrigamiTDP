@@ -45,13 +45,13 @@ Jugador::Jugador(int x, int y, int r)
     this->posx=x;
     this->posy=y;
     this->radio=r;
-    this->velocidad=10;
+    this->velocidad=30;
     setPos(posx,posy);
 }
 
 QRectF Jugador::boundingRect() const
 {
-    return QRectF(-radio,-radio,radio*2,radio*2);
+    return QRectF(-radio,-radio,radio+80,radio+80);
 }
 
 void Jugador::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
