@@ -178,6 +178,11 @@ void MainWindow::MoverFondo()
 {
     fondo->Setxy(fondo->GetPosx(),fondo->GetPosy()+3);
     fondo->Mover(fondo->GetPosx(),fondo->GetPosy());
+    if (fondo->GetPosy()>200)
+    {
+        fondo->Setxy(fondo->GetPosx(),-900);
+        fondo->Mover(fondo->GetPosx(),fondo->GetPosy());
+    }
 }
 
 void MainWindow::on_btnRegis_clicked()
@@ -213,6 +218,7 @@ void MainWindow::on_btnRegis_clicked()
         filep<<usu<<endl;
         filep<<contra<<endl;
         filep<<"1"<<endl;
+        filep<<"0"<<endl;
     }
 
 
@@ -251,6 +257,7 @@ void MainWindow::on_bntnvl1_clicked()
     archivo.close();
     if(entra == 1)
     {
+        labeludo->setText("¡Elimina tantos demonios como puedas!");
         Scene2->addItem(fondo);
         puntaje->setText(QString::number(contador));
         timerfondo->start(100);
