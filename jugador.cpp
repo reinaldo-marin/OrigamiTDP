@@ -114,5 +114,10 @@ void Jugador::Disparar()
 
 void Jugador::SetPos(int xd, int yd)
 {
-   setPos(xd,yd);
+    setPos(xd,yd);
+}
+
+void Jugador::SetViento(int v)
+{
+    viento = v;
 }
