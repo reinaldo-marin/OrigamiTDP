@@ -19,7 +19,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     movimiento.cpp \
-    objeto.cpp
+    objeto.cpp \
+    viento.cpp
 
 HEADERS += \
     bala.h \
@@ -31,7 +32,8 @@ HEADERS += \
     jugador.h \
     mainwindow.h \
     movimiento.h \
-    objeto.h
+    objeto.h \
+    viento.h
 
 FORMS += \
     mainwindow.ui
