@@ -10,6 +10,7 @@
 #include <objeto.h>
 #include <fondo.h>
 #include <jugador.h>
+#include <viento.h>
 #include <bala.h>
 #include <QTimer>
 #include <QGraphicsScene>
@@ -54,8 +55,10 @@ public:
     int conta = 1;
     int njugadores = 1;
     bool EvaluarColision(Jugador *Jugador);
+    bool EvaluarViento(Jugador *Jugador);
     bool EvaluarBala();
     int PosColi(Jugador *bola);
+    int PosViento(Jugador *bola);
     int PosBala();
     int PosBalin();
 
@@ -64,7 +67,9 @@ private slots:
     void Mover();
     void MoverBala();
     void MoverFondo();
+    void MoverViento();
     void Control_Enemigos1();
+    void Control_Vientos();
     void on_btnRegis_clicked();
 
     void on_bntnvl1_clicked();
@@ -78,6 +83,8 @@ private:
     QGraphicsScene *Scene2;
     QTimer *timer;
     QTimer *timer2;
+    QTimer *timerv;
+    QTimer *timer2v;
     QTimer *timerfondo;
     QTimer *timerbala;
     Cuerpo *cuerpo;
@@ -87,6 +94,7 @@ private:
     QList<pared*>paredes;
     QList<Enemigo*>enemigous;
     QList<Bala*>balas;
+    QList<Viento*>vientos;
     Inventory miInventory;
     Enemigo *enemigo;
     void keyPressEvent(QKeyEvent *evento);

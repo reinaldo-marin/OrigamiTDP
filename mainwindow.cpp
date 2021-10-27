@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     timer=  new QTimer;
     timer2=  new QTimer;
+    timerv=  new QTimer;
+    timer2v=  new QTimer;
     timerfondo=  new QTimer;
     timerbala=  new QTimer;
     Scene = new QGraphicsScene;
@@ -57,6 +59,8 @@ MainWindow::MainWindow(QWidget *parent)
     Scene->setSceneRect(-400,-450,800,810);
     connect(timer,SIGNAL(timeout()),this,SLOT(Mover()));
     connect(timer2,SIGNAL(timeout()),this,SLOT(Control_Enemigos1()));
+    connect(timerv,SIGNAL(timeout()),this,SLOT(MoverViento()));
+    connect(timer2v,SIGNAL(timeout()),this,SLOT(Control_Vientos()));
     connect(timerfondo,SIGNAL(timeout()),this,SLOT(MoverFondo()));
     connect(timerbala,SIGNAL(timeout()),this,SLOT(MoverBala()));
     labeludo = new QLabel(stringo,this);
@@ -142,7 +146,33 @@ void MainWindow::Control_Enemigos1()
     conta++;
 
 }
+void MainWindow::Control_Vientos()
+{
+    int xr = rand()%(800-161);
+    int xy = rand()%(600-101);
+    vientos.push_back(new Viento(xr,xy,5));
+    Scene2->addItem(vientos.back());
+    movimiento= new Movimiento(xr,xy,5);
 
+
+    if(miInventario.AgregarVientos(movimiento))
+    {
+
+    }
+    conta++;
+
+}
+void MainWindow::MoverViento()
+{
+    QList<Viento*>::Iterator it;
+    int s = 0;
+    for(it=vientos.begin();it!=vientos.end();it++)
+    {
+        miInventario.getVientos()[s]->SetPosi(miInventario.getVientos()[s]->getPosx(),miInventario.getVientos()[s]->getPosy()-60);
+        (*it)->Mover(miInventario.getVientos()[s]->getPosx(),miInventario.getVientos()[s]->getPosy());
+        s++;
+    }
+}
 
 void MainWindow::Mover()
 {
@@ -263,6 +293,8 @@ void MainWindow::on_bntnvl1_clicked()
         timerfondo->start(100);
         timer2->start(3000);
         timer->start(1000);
+        timer2v->start(9000);
+        timerv->start(1000);
         ui->graphicsView->setScene(Scene2);
         Scene2->setSceneRect(0,0,800,810);
         Scene2->addItem(ball);
@@ -282,6 +314,16 @@ bool MainWindow::EvaluarColision(Jugador *bola)
 {
     QList<Enemigo*>::Iterator it;
     for(it=enemigous.begin();it!=enemigous.end();it++)
+    {
+        if((*it)->collidesWithItem(bola) or (bola)->collidesWithItem(*it))
+            return true;
+    }
+    return false;
+}
+bool MainWindow::EvaluarViento(Jugador *bola)
+{
+    QList<Viento*>::Iterator it;
+    for(it=vientos.begin();it!=vientos.end();it++)
     {
         if((*it)->collidesWithItem(bola) or (bola)->collidesWithItem(*it))
             return true;
@@ -357,6 +399,20 @@ int MainWindow::PosColi(Jugador *bola)
     }
 
 }
+int MainWindow::PosViento(Jugador *bola)
+{
+    QList<Viento*>::Iterator it;
+    int pos;
+    for(it=vientos.begin();it!=vientos.end();it++)
+    {
+        if((*it)->collidesWithItem(bola) or (bola)->collidesWithItem(*it))
+        {
+            pos = it-vientos.begin();
+            return pos;
+        }
+    }
+
+}
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     if(evento->key()==Qt::Key_D)
@@ -371,6 +427,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
            Scene2->removeItem(enemigous.at(PosColi(ball)));
            contador-=100;
            puntaje->setText(QString::number(contador));
+        }
+        if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
+        {
+           Scene2->removeItem(vientos.at(PosViento(ball)));
+           ball->SetViento(10);
         }
         else
            ball->MoveRight();
@@ -389,6 +450,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             contador-=100;
             puntaje->setText(QString::number(contador));
         }
+        if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
+        {
+           Scene2->removeItem(vientos.at(PosViento(ball)));
+           ball->SetViento(10);
+        }
         else
             ball->MoveLeft();
      }
@@ -405,6 +471,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             contador-=100;
             puntaje->setText(QString::number(contador));
       }
+      if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
+      {
+         Scene2->removeItem(vientos.at(PosViento(ball)));
+         ball->SetViento(10);
+      }
         else
             ball->MoveUp();
     }
@@ -420,6 +491,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             Scene2->removeItem(enemigous.at(PosColi(ball)));
             contador-=100;
             puntaje->setText(QString::number(contador));
+        }
+        if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
+        {
+           Scene2->removeItem(vientos.at(PosViento(ball)));
+           ball->SetViento(10);
         }
         else
            ball->MoveDown();
@@ -450,6 +526,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
            contador-=100;
            puntaje->setText(QString::number(contador));
         }
+        if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
+        {
+           Scene2->removeItem(vientos.at(PosViento(ball2)));
+           ball2->SetViento(10);
+        }
         else
            ball2->MoveRight();
 
@@ -467,6 +548,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             contador-=100;
             puntaje->setText(QString::number(contador));
         }
+        if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
+        {
+           Scene2->removeItem(vientos.at(PosViento(ball2)));
+           ball2->SetViento(10);
+        }
         else
             ball2->MoveLeft();
      }
@@ -483,6 +569,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             contador-=100;
             puntaje->setText(QString::number(contador));
       }
+      if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
+      {
+         Scene2->removeItem(vientos.at(PosViento(ball2)));
+         ball2->SetViento(10);
+      }
         else
             ball2->MoveUp();
     }
@@ -498,6 +589,11 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             Scene2->removeItem(enemigous.at(PosColi(ball)));
             contador-=100;
             puntaje->setText(QString::number(contador));
+        }
+        if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
+        {
+           Scene2->removeItem(vientos.at(PosViento(ball2)));
+           ball2->SetViento(10);
         }
         else
            ball2->MoveDown();

@@ -22,7 +22,11 @@ bool Inventario::AgregarBalas(Movimiento *Bala)
         Balas.push_back(Bala);
         return true;
 }
-
+bool Inventario::AgregarVientos(Movimiento *Viento)
+{
+        Vientos.push_back(Viento);
+        return true;
+}
 
 std::vector<Movimiento *> Inventario::getCuerpos()
 {
@@ -31,6 +35,10 @@ std::vector<Movimiento *> Inventario::getCuerpos()
 std::vector<Movimiento *> Inventario::getBalas()
 {
     return Balas;
+}
+std::vector<Movimiento *> Inventario::getVientos()
+{
+    return Vientos;
 }
 int Inventario::ContarCuerpos()
 {
