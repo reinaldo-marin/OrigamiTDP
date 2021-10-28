@@ -84,6 +84,8 @@ private:
     QAction *bntFull;
     QGraphicsScene *Scene;
     QGraphicsScene *Scene2;
+    QGraphicsScene *Scene3;
+    QGraphicsScene *Scene4;
     QTimer *timer;
     QTimer *timerhp;
     QTimer *timer2;
@@ -107,6 +109,9 @@ private:
     Barra *barra;
     Barra *barra2;
     Fondo *fondo;
+    Fondo *fondo2;
+    Fondo *fondo3;
+    Fondo *fondo4;
 
 };
 #endif // MAINWINDOW_H
