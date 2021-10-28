@@ -372,9 +372,9 @@ void MainWindow::on_bntnvl1_clicked()
             fondo = new Fondo(300,-900,300);
             ball = new Jugador(300,600,60);
             barra = new Barra(15,700,5);
-            QList<Enemigo*>enemigous;
-            QList<Bala*>balas;
-            QList<Viento*>vientos;
+            enemigous.clear();
+            balas.clear();
+            vientos.clear();
             Inventario miInventario;
             if(njugadores == 2)
             {
@@ -385,6 +385,7 @@ void MainWindow::on_bntnvl1_clicked()
 
         }
         labeludo->setText("¡Elimina tantos demonios como puedas!");
+        ui->graphicsView->setScene(Scene2);
         Scene2->addItem(fondo);
         puntaje->setText(QString::number(contador));
         puntajer->setText(QString::number(record));
@@ -392,8 +393,7 @@ void MainWindow::on_bntnvl1_clicked()
         timer2->start(3000);
         timer->start(1000);
         timerv->start(1000);
-        timerhp->start(1000);
-        ui->graphicsView->setScene(Scene2);
+        timerhp->start(1000);     
         Scene2->setSceneRect(0,0,800,810);
         Scene2->addItem(ball);
         Scene2->addItem(barra);
@@ -407,7 +407,7 @@ void MainWindow::on_bntnvl1_clicked()
         }
         else
         {
-            timer2v->start(9000);
+            timer2v->start(6000);
         }
 
     }
@@ -532,6 +532,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            ball->SetPos(ball->GetPosx()-20,ball->GetPosy());
            Scene2->removeItem(enemigous.at(PosColi(ball)));
+           delete (enemigous.takeAt(PosColi(ball)));
            contador-=100;
            puntaje->setText(QString::number(contador));
         }
@@ -597,9 +598,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_S)
     {
-        if(ball->GetPosy()>=690)
+        if(ball->GetPosy()>0)
         {
-          ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
+          ball->SetPos(ball->GetPosx(),ball->GetPosy()-100);
         }
         if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
         {
