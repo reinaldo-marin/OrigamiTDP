@@ -16,7 +16,7 @@ class Jugador: public QGraphicsItem
    int posy;
    int radio;
    int velocidad;
-   int viento = 10;
+   int viento = 20;
 
     //Metodos
 public:
@@ -36,11 +36,14 @@ public:
     void MoveLeft();
     void MoveUp();
     int GetPosx();
+    int GetViento();
+    int GetVelocidad();
     int GetPosy();
     void MoveDown();
     void Disparar();
     void SetPos(int xd, int yd);
     void SetViento(int v);
+    void SetVelocidad(int vel);
 
 };
 #endif // JUGADOR_H

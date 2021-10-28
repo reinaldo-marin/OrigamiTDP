@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     bala.cpp \
+    barra.cpp \
     cuerpo.cpp \
     enemigo.cpp \
     fondo.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     bala.h \
+    barra.h \
     cuerpo.h \
     enemigo.h \
     fondo.h \
