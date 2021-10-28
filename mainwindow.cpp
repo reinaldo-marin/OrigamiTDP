@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     timer=  new QTimer;
+    timerhp=  new QTimer;
     timer2=  new QTimer;
     timerv=  new QTimer;
     timer2v=  new QTimer;
@@ -58,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setScene(Scene);
     Scene->setSceneRect(-400,-450,800,810);
     connect(timer,SIGNAL(timeout()),this,SLOT(Mover()));
+    connect(timerhp,SIGNAL(timeout()),this,SLOT(JugadorHP()));
     connect(timer2,SIGNAL(timeout()),this,SLOT(Control_Enemigos1()));
     connect(timerv,SIGNAL(timeout()),this,SLOT(MoverViento()));
     connect(timer2v,SIGNAL(timeout()),this,SLOT(Control_Vientos()));
@@ -71,8 +73,10 @@ MainWindow::MainWindow(QWidget *parent)
     puntaje->setGeometry(1020,800,900,70);
     puntaje->setFont(QFont("Comic Sans MS", 20));
     entra = 0;
-    ball = new Jugador(300,700,60);
-    ball2 = new Jugador(500,700,61);
+    ball = new Jugador(300,600,60);
+    ball2 = new Jugador(500,600,61);
+    barra = new Barra(15,700,5);
+    barra2 = new Barra(500,700,6);
     fondo = new Fondo(300,-900,300);
 }
 
@@ -204,6 +208,27 @@ void MainWindow::MoverBala()
     }
 }
 
+void MainWindow::JugadorHP()
+{
+    ball->SetViento(ball->GetViento()-1);
+    ball->SetVelocidad(ball->GetVelocidad()-2);
+    if (njugadores==2)
+    {
+        ball2->SetViento(ball->GetViento()-1);
+        ball2->SetVelocidad(ball->GetVelocidad()-2);
+    }
+    if (ball->GetViento()==0 and restantes>0)
+    {
+        Scene2->removeItem(ball);
+        restantes -= 1;
+    }
+    if (njugadores==2 and ball2->GetViento()==0 and restantes>0)
+    {
+        Scene2->removeItem(ball2);
+        restantes -= 1;
+    }
+}
+
 void MainWindow::MoverFondo()
 {
     fondo->Setxy(fondo->GetPosx(),fondo->GetPosy()+3);
@@ -293,14 +318,21 @@ void MainWindow::on_bntnvl1_clicked()
         timerfondo->start(100);
         timer2->start(3000);
         timer->start(1000);
-        timer2v->start(9000);
         timerv->start(1000);
         ui->graphicsView->setScene(Scene2);
         Scene2->setSceneRect(0,0,800,810);
         Scene2->addItem(ball);
+        Scene2->addItem(barra);
         if (njugadores==2)
         {
+           restantes = 2;
            Scene2->addItem(ball2);
+           Scene2->addItem(barra2);
+           timer2v->start(4500);
+        }
+        else
+        {
+            timer2v->start(9000);
         }
 
     }
@@ -432,6 +464,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            Scene2->removeItem(vientos.at(PosViento(ball)));
            ball->SetViento(10);
+           ball->SetVelocidad(30);
         }
         else
            ball->MoveRight();
@@ -454,6 +487,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            Scene2->removeItem(vientos.at(PosViento(ball)));
            ball->SetViento(10);
+           ball->SetVelocidad(30);
         }
         else
             ball->MoveLeft();
@@ -475,6 +509,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
       {
          Scene2->removeItem(vientos.at(PosViento(ball)));
          ball->SetViento(10);
+         ball->SetVelocidad(30);
       }
         else
             ball->MoveUp();
@@ -496,6 +531,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            Scene2->removeItem(vientos.at(PosViento(ball)));
            ball->SetViento(10);
+           ball->SetVelocidad(30);
         }
         else
            ball->MoveDown();
@@ -530,6 +566,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            Scene2->removeItem(vientos.at(PosViento(ball2)));
            ball2->SetViento(10);
+           ball2->SetVelocidad(30);
+           ball->SetVelocidad(30);
         }
         else
            ball2->MoveRight();
@@ -552,6 +590,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            Scene2->removeItem(vientos.at(PosViento(ball2)));
            ball2->SetViento(10);
+           ball2->SetVelocidad(30);
         }
         else
             ball2->MoveLeft();
@@ -573,6 +612,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
       {
          Scene2->removeItem(vientos.at(PosViento(ball2)));
          ball2->SetViento(10);
+         ball2->SetVelocidad(30);
       }
         else
             ball2->MoveUp();
@@ -594,6 +634,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            Scene2->removeItem(vientos.at(PosViento(ball2)));
            ball2->SetViento(10);
+           ball2->SetVelocidad(30);
         }
         else
            ball2->MoveDown();

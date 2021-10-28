@@ -95,6 +95,16 @@ int Jugador::GetPosx()
     return posx;
 }
 
+int Jugador::GetViento()
+{
+    return viento;
+}
+
+int Jugador::GetVelocidad()
+{
+    return velocidad;
+}
+
 int Jugador::GetPosy()
 {
     return posy;
@@ -120,4 +130,9 @@ void Jugador::SetPos(int xd, int yd)
 void Jugador::SetViento(int v)
 {
     viento = v;
+}
+
+void Jugador::SetVelocidad(int vel)
+{
+    velocidad = vel;
 }
