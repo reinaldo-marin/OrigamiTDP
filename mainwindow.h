@@ -49,6 +49,7 @@ public:
     ~MainWindow();
     QLabel *labeludo;
     QLabel *puntaje;
+    QLabel *puntajer;
     QString stringo;
     QString stringp;
     int contador = 0;
@@ -56,6 +57,9 @@ public:
     int conta = 1;
     int njugadores = 1;
     int restantes = 1;
+    int intento = 1;
+    int record;
+    int posiposi;
     bool EvaluarColision(Jugador *Jugador);
     bool EvaluarViento(Jugador *Jugador);
     bool EvaluarBala();
