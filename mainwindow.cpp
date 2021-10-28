@@ -84,6 +84,9 @@ MainWindow::MainWindow(QWidget *parent)
     puntaje = new QLabel(stringp,this);
     puntaje->setGeometry(1020,800,900,70);
     puntaje->setFont(QFont("Comic Sans MS", 20));
+    puntajer = new QLabel(stringp,this);
+    puntajer->setGeometry(1020,860,900,70);
+    puntajer->setFont(QFont("Comic Sans MS", 20));
     entra = 0;
     ball = new Jugador(300,600,60);
     ball2 = new Jugador(500,600,61);
@@ -121,6 +124,16 @@ void MainWindow::on_bntIniSesi_clicked()
         }
 
     }
+    ifstream fe("usuarioycontra.txt");
+    string lineaus1;
+    for(posiposi = 0;getline(fe, lineaus1);posiposi++)
+    {
+        if (posiposi == c+2)
+         {
+           int n = atoi(lineaus1.c_str());
+           record = n;
+         }
+    }
     ifstream f("usuarioycontra.txt");
     string lineaus;
     for(int z = 0;getline(f, lineaus);z++)
@@ -141,7 +154,6 @@ void MainWindow::on_bntIniSesi_clicked()
          }
 
     }
-
 
 }
 
@@ -233,7 +245,7 @@ void MainWindow::JugadorHP()
         barra2->Mover(barra2->GetPosx(),barra2->GetPosy());
         ball2->SetVelocidad(ball2->GetVelocidad()-1);
     }
-    if (ball->GetViento()==0 and restantes>0)
+    if (ball->GetViento()==0)
     {
         Scene2->removeItem(ball);
         restantes -= 1;
@@ -245,7 +257,25 @@ void MainWindow::JugadorHP()
     }
     if(restantes == 0)
     {
-      ui->graphicsView->setScene(Scene4);
+       ui->graphicsView->setScene(Scene4);
+       intento +=1;
+       ifstream re("usuarioycontra.txt");
+       string lineaus2;
+       vector<string>archivo;
+       for(int x = 0;getline(re, lineaus2);x++)
+       {
+         archivo.push_back(lineaus2);
+       }
+       string numerazo(std::to_string(record));
+       archivo[posiposi-1] = numerazo;
+       string nombreArchivo = "usuarioycontra.txt";
+       ofstream archivol;
+       // Abrimos el archivo
+       archivol.open(nombreArchivo.c_str(), fstream::out);
+       for(int o = 0; o<archivo.size();o++)
+       {
+           archivol << archivo[o] << endl;
+       }
     }
 }
 
@@ -257,6 +287,11 @@ void MainWindow::MoverFondo()
     {
         fondo->Setxy(fondo->GetPosx(),-900);
         fondo->Mover(fondo->GetPosx(),fondo->GetPosy());
+    }
+    if (contador>record)
+    {
+     record = contador;
+     puntajer->setText(QString::number(record));
     }
 }
 
@@ -292,7 +327,6 @@ void MainWindow::on_btnRegis_clicked()
         filep.open("usuarioycontra.txt",ios::app);
         filep<<usu<<endl;
         filep<<contra<<endl;
-        filep<<"1"<<endl;
         filep<<"0"<<endl;
     }
 
@@ -332,9 +366,28 @@ void MainWindow::on_bntnvl1_clicked()
     archivo.close();
     if(entra == 1)
     {
+        if (intento>1)
+        {
+            Scene2 = new QGraphicsScene;
+            fondo = new Fondo(300,-900,300);
+            ball = new Jugador(300,600,60);
+            barra = new Barra(15,700,5);
+            QList<Enemigo*>enemigous;
+            QList<Bala*>balas;
+            QList<Viento*>vientos;
+            Inventario miInventario;
+            if(njugadores == 2)
+            {
+                ball2 = new Jugador(500,600,61);
+                barra2 = new Barra(500,700,6);
+
+            }
+
+        }
         labeludo->setText("¡Elimina tantos demonios como puedas!");
         Scene2->addItem(fondo);
         puntaje->setText(QString::number(contador));
+        puntajer->setText(QString::number(record));
         timerfondo->start(100);
         timer2->start(3000);
         timer->start(1000);
@@ -471,9 +524,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     if(evento->key()==Qt::Key_D)
     {
-        if(ball->GetPosx()>800)
+        if(ball->GetPosy()>=690)
         {
-          ball->SetPos(ball->GetPosx()-20,ball->GetPosy());
+          ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
         }
         if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
         {
@@ -544,9 +597,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
     else if(evento->key()==Qt::Key_S)
     {
-        if(ball->GetPosy()>500)
+        if(ball->GetPosy()>=690)
         {
-            ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
+          ball->SetPos(ball->GetPosx(),ball->GetPosy()-20);
         }
         if(EvaluarColision(ball) && enemigous.at(PosColi(ball))->scene() != NULL)
         {
