@@ -532,14 +532,13 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         {
            ball->SetPos(ball->GetPosx()-20,ball->GetPosy());
            Scene2->removeItem(enemigous.at(PosColi(ball)));
-           delete (enemigous.takeAt(PosColi(ball)));
            contador-=100;
            puntaje->setText(QString::number(contador));
         }
         if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
         {
            Scene2->removeItem(vientos.at(PosViento(ball)));
-           ball->SetViento(10);
+           ball->SetViento(20);
            ball->SetVelocidad(30);
            barra->Setxy(15,700);
            barra->Mover(barra->GetPosx(),barra->GetPosy());
@@ -564,7 +563,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
         {
            Scene2->removeItem(vientos.at(PosViento(ball)));
-           ball->SetViento(10);
+           ball->SetViento(20);
            ball->SetVelocidad(30);
            barra->Setxy(15,700);
            barra->Mover(barra->GetPosx(),barra->GetPosy());
@@ -588,7 +587,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
       if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
       {
          Scene2->removeItem(vientos.at(PosViento(ball)));
-         ball->SetViento(10);
+         ball->SetViento(20);
          ball->SetVelocidad(30);
          barra->Setxy(15,700);
          barra->Mover(barra->GetPosx(),barra->GetPosy());
@@ -612,7 +611,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         if(EvaluarViento(ball) && vientos.at(PosViento(ball))->scene() != NULL)
         {
            Scene2->removeItem(vientos.at(PosViento(ball)));
-           ball->SetViento(10);
+           ball->SetViento(20);
            ball->SetVelocidad(30);
            barra->Setxy(15,700);
            barra->Mover(barra->GetPosx(),barra->GetPosy());
@@ -649,7 +648,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
         {
            Scene2->removeItem(vientos.at(PosViento(ball2)));
-           ball2->SetViento(10);
+           ball2->SetViento(20);
            ball2->SetVelocidad(30);
            ball->SetVelocidad(30);
            barra2->Setxy(500,700);
@@ -675,7 +674,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
         {
            Scene2->removeItem(vientos.at(PosViento(ball2)));
-           ball2->SetViento(10);
+           ball2->SetViento(20);
            ball2->SetVelocidad(30);
            barra2->Setxy(500,700);
            barra2->Mover(barra2->GetPosx(),barra2->GetPosy());
@@ -699,7 +698,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
       if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
       {
          Scene2->removeItem(vientos.at(PosViento(ball2)));
-         ball2->SetViento(10);
+         ball2->SetViento(20);
          ball2->SetVelocidad(30);
          barra2->Setxy(500,700);
          barra2->Mover(barra2->GetPosx(),barra2->GetPosy());
@@ -723,7 +722,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         if(EvaluarViento(ball2) && vientos.at(PosViento(ball2))->scene() != NULL)
         {
            Scene2->removeItem(vientos.at(PosViento(ball2)));
-           ball2->SetViento(10);
+           ball2->SetViento(20);
            ball2->SetVelocidad(30);
            barra2->Setxy(500,700);
            barra2->Mover(barra2->GetPosx(),barra2->GetPosy());
