@@ -386,6 +386,7 @@ void MainWindow::on_bntnvl1_clicked()
         }
         labeludo->setText("¡Elimina tantos demonios como puedas!");
         ui->graphicsView->setScene(Scene2);
+        Scene2->setSceneRect(0,0,800,810);
         Scene2->addItem(fondo);
         puntaje->setText(QString::number(contador));
         puntajer->setText(QString::number(record));
@@ -394,7 +395,6 @@ void MainWindow::on_bntnvl1_clicked()
         timer->start(1000);
         timerv->start(1000);
         timerhp->start(1000);     
-        Scene2->setSceneRect(0,0,800,810);
         Scene2->addItem(ball);
         Scene2->addItem(barra);
         restantes = 1;
